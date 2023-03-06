@@ -17,8 +17,11 @@ Rational::Rational(int n) {
 	denom = 1;
 }
 Rational::Rational(int n, int d) {
-	assert(d != 0);
+	if (d == 0) {
+		throw std::invalid_argument("division by zero");
+	}
 
+	assert(d != 0);
 
 	num = n;
 	denom = d;
@@ -37,6 +40,9 @@ int Rational::denomer() {
 
 
 int Rational::nod(int n, int d) {
+	if (d == 0) {
+		throw std::invalid_argument("division by zero");
+	}
 	assert(d != 0);
 	while (d != 0) {
 		int temp = d;
@@ -171,6 +177,9 @@ std::ostream& operator<<(std::ostream& ostrm, const Rational& rat) {
 }
 std::ostream& Rational::writeto(std::ostream& ostrm) const {
 	ostrm << num << sep << denom;
+	if (d == 0) {
+		throw std::invalid_argument("division by zero");
+	}
 	assert(denom != 0);
 
 	return ostrm;
@@ -185,6 +194,9 @@ std::istream& Rational::readfrom(std::istream& istrm) {
 	int numer = 0;
 	int denomer = 1;
 	istrm >> numer >> sep >> denomer;
+	if (d == 0) {
+		throw std::invalid_argument("division by zero");
+	}
 	assert(denomer != 0);
 	if (istrm.good()) {
 		if (sep == Rational::sep) {
