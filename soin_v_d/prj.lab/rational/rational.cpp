@@ -177,7 +177,7 @@ std::ostream& operator<<(std::ostream& ostrm, const Rational& rat) {
 }
 std::ostream& Rational::writeto(std::ostream& ostrm) const {
 	ostrm << num << sep << denom;
-	if (denom == 0) {
+	if (d == 0) {
 		throw std::invalid_argument("division by zero");
 	}
 	assert(denom != 0);
@@ -194,7 +194,7 @@ std::istream& Rational::readfrom(std::istream& istrm) {
 	int numer = 0;
 	int denomer = 1;
 	istrm >> numer >> sep >> denomer;
-	if (denomer == 0) {
+	if (d == 0) {
 		throw std::invalid_argument("division by zero");
 	}
 	assert(denomer != 0);

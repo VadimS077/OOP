@@ -6,15 +6,13 @@
 
 #include <iosfwd>
 class Rational {
-private:
-	int num;
-	int denom;
-	static const char sep = '/';
 
 
 
 public:
 	Rational();
+	Rational(const Rational&) = default;
+	Rational(Rational&&) = default;
 	Rational(int n);
 	Rational(int n, int d);
 	int nod(int num, int denom);
@@ -39,6 +37,10 @@ public:
 	Rational operator--(int);
 	Rational operator+();
 	Rational operator-();
+private:
+	int num;
+	int denom;
+	static const char sep = '/';
 
 
 
