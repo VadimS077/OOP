@@ -5,3 +5,5 @@ target_include_directories(rational PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 install(TARGETS rational)
+
+
