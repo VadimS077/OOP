@@ -48,10 +48,10 @@ void ArrayD::resize(const ptrdiff_t newsize) {
             size_ = newsize;
         }
         else {
-            // if new size is greater than capacity, allocate new memory with the appropriate capacity
+        
             double* new_arr = new double[newsize];
 
-            // copy the old data to the new memory and update the size and capacity
+            
             std::copy(arr, arr + size_, new_arr);
             delete[] arr;
             arr = new_arr;
