@@ -64,7 +64,7 @@ void ArrayD::insert(ptrdiff_t i,double a) {
         throw std::out_of_range("out of range");
     }
     resize(getsize() + 1);
-    for (ptrdiff_t b = getsize()-1; b>i; b--) {
+    for (ptrdiff_t b = getsize()-1; b>i; --b) {
         arr[b] = arr[b-1];
     }
     arr[i] = a;
@@ -73,7 +73,7 @@ void ArrayD::remove(ptrdiff_t i) {
     if (i<0 || i>getsize()) {
         throw std::out_of_range("out of range");
     }
-    for (ptrdiff_t b = i + 1; i < getsize(); i++) {
+    for (ptrdiff_t b = i + 1; i < getsize(); ++i) {
         arr[b-1] = arr[b];
     }
     resize(getsize() - 1);
