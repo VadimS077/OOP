@@ -53,6 +53,9 @@ void ArrayD::resize(const ptrdiff_t newsize) {
         else {
         
             double* new_arr = new double[newsize];
+            for (ptrdiff_t i = 0; i < newsize; i++) {
+                new_arr[i] = 0;
+            }
 
             
             std::copy(arr, arr + size_, new_arr);
