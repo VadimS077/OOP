@@ -8,6 +8,9 @@ ArrayD::ArrayD(const ptrdiff_t cap) : arr(new double[cap]), size_(cap), capacity
     if (cap < 0) {
         throw std::out_of_range("out of range");
     }
+    for (ptrdiff_t i = 0; i < getsize(); i++) {
+        arr[i] = 0;
+    }
 }
 ArrayD::ArrayD(const ArrayD& other) : arr(new double[other.capacity]), size_(other.size_), capacity(other.capacity) {
 	std::copy(other.arr, other.arr + size_, arr);
