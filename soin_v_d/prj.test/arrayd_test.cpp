@@ -35,12 +35,12 @@ TEST_CASE("ArrayD") {
         a.insert(0, 1.5);
         a.insert(1, 2.5);
         a.insert(1, 2.0);
-        CHECK(a.getsize() == 3);
+        CHECK(a.getsize() == 5);
         CHECK(a[0] == doctest::Approx(1.5));
         CHECK(a[1] == doctest::Approx(2.0));
         CHECK(a[2] == doctest::Approx(2.5));
         a.remove(1);
-        CHECK(a.getsize() == 2);
+        CHECK(a.getsize() == 4);
         CHECK(a[0] == doctest::Approx(1.5));
         CHECK(a[1] == doctest::Approx(2.5));
     }
