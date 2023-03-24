@@ -17,22 +17,20 @@ Rational::Rational(int n) {
 	denom = 1;
 }
 Rational::Rational(int n, int d) {
+	if (d < 0) {
+		d *= -1;
+		n *= -1;
+	}
 	if (d == 0) {
 		throw std::invalid_argument("division by zero");
 	}
-
 	assert(d != 0);
-
 	num = n;
 	denom = d;
-
-
-
-
+	reducing();
 }
 int Rational::numer() {
 	return num;
-
 }
 int Rational::denomer() {
 	return denom;
@@ -60,40 +58,52 @@ Rational& Rational::reducing() {
 Rational& Rational::operator=(const Rational& rhs) {
 	num = rhs.num;
 	denom = rhs.denom;
+	reducing();
 	return *this;
 }
 Rational& Rational::operator+=(const Rational& rhs) {
 	num = num * rhs.denom + rhs.num * denom;
 	denom = denom * rhs.denom;
-
-	Rational r(num, denom);
-	r.reducing();
+	reducing();
 	return *this;
 }
 Rational& Rational::operator-=(const Rational& rhs) {
 	num = num * rhs.denom - rhs.num * denom;
 	denom = denom * rhs.denom;
-
-	Rational r(num, denom);
-	r.reducing();
+	reducing();
 	return *this;
 }
 Rational& Rational::operator*=(const Rational& rhs) {
 	num = num * rhs.num;
 	denom = denom * rhs.denom;
-
-	Rational r(num, denom);
-	r.reducing();
+	reducing();
 	return *this;
 }
 Rational& Rational::operator/=(const Rational& rhs) {
 	num = num * rhs.denom;
 	denom = denom * rhs.num;
 
-	Rational r(num, denom);
-	r.reducing();
+	reducing();
 	return *this;
 }
+
+Rational& Rational::operator=(const int& rhs) {
+	return *this = Rational(rhs);
+}
+Rational& Rational::operator+=(const int& rhs) {
+	return *this += Rational(rhs);
+}
+Rational& Rational::operator-=(const int& rhs) {
+	return *this -= Rational(rhs);
+}
+Rational& Rational::operator*=(const int& rhs) {
+	return *this *= Rational(rhs);
+}
+Rational& Rational::operator/=(const int& rhs) {
+	return *this /= Rational(rhs);
+}
+
+
 Rational operator+(Rational lhs, const Rational& rhs) {
 	lhs += rhs;
 	lhs.Rational::reducing();
@@ -114,6 +124,44 @@ Rational operator/(Rational lhs, const Rational& rhs) {
 	lhs.Rational::reducing();
 	return lhs;
 }
+Rational operator+(Rational lhs, const int& rhs) {
+	lhs += Rational(rhs);
+	return lhs;
+}
+Rational operator-(Rational lhs, const int& rhs) {
+	lhs -= Rational(rhs);
+	return lhs;
+}
+Rational operator*(Rational lhs, const int& rhs) {
+	lhs *= Rational(rhs);
+	return lhs;
+}
+Rational operator/(Rational lhs, const int& rhs) {
+	lhs /= Rational(rhs);
+	return lhs;
+}
+
+Rational operator+(const int& lhs, Rational rhs) {
+	rhs += lhs;
+	return rhs;
+}
+Rational operator-(const int& lhs, Rational rhs) {
+	rhs -= lhs;
+	return -rhs;
+}
+Rational operator*(const int& lhs, Rational rhs) {
+	rhs *= lhs;
+	return rhs;
+}
+Rational operator/(const int& lhs, Rational rhs) {
+	rhs/=lhs;
+	Rational a(1);
+	rhs = a / rhs;
+
+	return rhs;
+}
+
+
 bool Rational::zero() {
 	return num == 0;
 }
@@ -190,25 +238,26 @@ std::istream& operator>>(std::istream& istrm, Rational& rat) {
 	return rat.readfrom(istrm);
 }
 std::istream& Rational::readfrom(std::istream& istrm) {
-	char sep = 0;
-	int numer = 0;
-	int denomer = 1;
-	istrm >> numer >> sep >> denomer;
-	if (denomer == 0) {
-		throw std::invalid_argument("division by zero");
-	}
-	assert(denomer != 0);
-	if (istrm.good()) {
-		if (sep == Rational::sep) {
-			num = numer;
-			denom = denomer;
+	int numerator, denominator;
+	char slash;
 
-		}
-		else {
-			istrm.setstate(std::ios_base::failbit);
+	istrm >> numerator;
+
+	if (istrm.peek() == '/') {
+		istrm >> slash;
+
+		istrm >> denominator;
+
+		if (denominator <= 0) {
+			throw std::invalid_argument("Denominator must be greater than zero");
 		}
 
+		*this = Rational(numerator, denominator);
 	}
+	else {
+		*this = Rational(numerator);
+	}
+
 	return istrm;
 }
 

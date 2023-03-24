@@ -29,14 +29,22 @@ public:
 	Rational& operator-=(const Rational& rhs);
 	Rational& operator*=(const Rational& rhs);
 	Rational& operator/=(const Rational& rhs);
+	
 	std::ostream& writeto(std::ostream& ostrm) const;
 	std::istream& readfrom(std::istream& istrm);
+	
 	Rational& operator++();
 	Rational operator++(int);
 	Rational& operator--();
 	Rational operator--(int);
 	Rational operator+();
 	Rational operator-();
+	Rational& operator=(const int& rhs);
+	Rational& operator+=(const int& rhs);
+	Rational& operator-=(const int& rhs);
+	Rational& operator*=(const int& rhs);
+	Rational& operator/=(const int& rhs);
+
 private:
 	int num;
 	int denom;
@@ -55,10 +63,22 @@ bool operator<(Rational lhs, const Rational& rhs);
 bool operator!=(const Rational& lhs, const Rational& rhs);
 bool operator<=(const Rational& lhs, const Rational& rhs);
 bool operator>=(const Rational& lhs, const Rational& rhs);
+
 Rational operator+(Rational lhs, const Rational& rhs);
 Rational operator-(Rational lhs, const Rational& rhs);
 Rational operator*(Rational lhs, const Rational& rhs);
 Rational operator/(Rational lhs, const Rational& rhs);
+
+Rational operator+(Rational lhs, const int& rhs);
+Rational operator-(Rational lhs, const int& rhs);
+Rational operator*(Rational lhs, const int& rhs);
+Rational operator/(Rational lhs, const int& rhs);
+
+Rational operator+(const int& lhs, Rational rhs);
+Rational operator-(const int& lhs, Rational rhs);
+Rational operator*(const int& lhs, Rational rhs);
+Rational operator/(const int& lhs, Rational rhs);
+
 std::istream& operator>>(std::istream& istrm, Rational& rat);
 std::ostream& operator<<(std::ostream& ostrm, const Rational& rat);
 
