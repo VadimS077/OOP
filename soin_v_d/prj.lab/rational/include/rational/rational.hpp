@@ -31,8 +31,8 @@ public:
 	Rational& operator*=(const Rational& rhs);
 	Rational& operator/=(const Rational& rhs);
 	
-	std::ostream& writeto(std::ostream& ostrm) const;
-	std::istream& readfrom(std::istream& istrm);
+	std::ostream& WriteTo(std::ostream& ostrm) const noexcept;
+	std::istream& ReadFrom(std::istream& istrm);
 	
 	Rational& operator++();
 	Rational operator++(int32_t);

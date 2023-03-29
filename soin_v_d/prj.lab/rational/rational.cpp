@@ -221,9 +221,9 @@ Rational Rational::operator-() {
 }
 
 std::ostream& operator<<(std::ostream& ostrm, const Rational& rat) {
-	return rat.writeto(ostrm);
+	return rat.WriteTo(ostrm);
 }
-std::ostream& Rational::writeto(std::ostream& ostrm) const {
+std::ostream& Rational::WriteTo(std::ostream& ostrm) const noexcept {
 	ostrm << num << sep << denom;
 	if (denom == 0) {
 		throw std::invalid_argument("division by zero");
@@ -235,29 +235,19 @@ std::ostream& Rational::writeto(std::ostream& ostrm) const {
 
 }
 std::istream& operator>>(std::istream& istrm, Rational& rat) {
-	return rat.readfrom(istrm);
+	return rat.ReadFrom(istrm);
 }
-std::istream& Rational::readfrom(std::istream& istrm) {
+std::istream& Rational::ReadFrom(std::istream& istrm) {
 	int32_t numerator, denominator;
-	char slash;
-
-	istrm >> numerator;
-
-	if (istrm.peek() == '/') {
-		istrm >> slash;
-
-		istrm >> denominator;
-
-		if (denominator <= 0) {
-			throw std::invalid_argument("Denominator must be greater than zero");
-		}
-
-		*this = Rational(numerator, denominator);
+	char separator;
+	istrm >> numerator >> separator >> denominator;
+	if (!istrm.fail() && separator == Rational::sep && denominator != 0) {
+		num = numerator;
+		denom = denominator;
 	}
 	else {
-		*this = Rational(numerator);
+		istrm.setstate(std::ios_base::failbit);
 	}
-
 	return istrm;
 }
 
