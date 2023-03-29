@@ -14,7 +14,7 @@ public:
 	Rational();
 	Rational(const Rational&) = default;
 	Rational(Rational&&) = default;
-	Rational(int32_t n);
+	explicit Rational(int32_t n) noexcept;
 	Rational(int32_t n, int32_t d);
 	int32_t nod(int32_t num, int32_t denom);
 	Rational& reducing();

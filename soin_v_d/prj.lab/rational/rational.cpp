@@ -12,7 +12,7 @@ Rational::Rational() {
 	num = 0;
 	denom = 1;
 }
-Rational::Rational(int32_t n) {
+Rational::Rational(int32_t n) noexcept {
 	num = n;
 	denom = 1;
 }
