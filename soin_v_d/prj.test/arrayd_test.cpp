@@ -5,7 +5,7 @@
 TEST_CASE("ArrayD") {
     SUBCASE("Default constructor") {
         ArrayD a;
-        CHECK(a.getsize() == 0);
+        CHECK(a.ssize() == 0);
     }
 
     SUBCASE("Resize and subscript operator") {
@@ -13,7 +13,7 @@ TEST_CASE("ArrayD") {
         a.resize(5);
         a[0] = 3.5;
         a[1] = 2.0;
-        CHECK(a.getsize() == 5);
+        CHECK(a.ssize() == 5);
         CHECK(a[0] == doctest::Approx(3.5));
         CHECK(a[1] == doctest::Approx(2.0));
     }
@@ -23,7 +23,7 @@ TEST_CASE("ArrayD") {
         a.resize(5);
         a[0] = 3.5;
         ArrayD b(a);
-        CHECK(b.getsize() == 5);
+        CHECK(b.ssize() == 5);
         CHECK(b[0] == doctest::Approx(3.5));
         b[0] = 1.0;
         CHECK(a[0] == doctest::Approx(3.5));
@@ -35,12 +35,15 @@ TEST_CASE("ArrayD") {
         a.insert(0, 1.5);
         a.insert(1, 2.5);
         a.insert(1, 2.0);
-        CHECK(a.getsize() == 5);
+        CHECK(a.ssize() == 5);
+        CHECK_THROWS(a[-1]);
+        CHECK_THROWS(a[5]);
         CHECK(a[0] == doctest::Approx(1.5));
         CHECK(a[1] == doctest::Approx(2.0));
         CHECK(a[2] == doctest::Approx(2.5));
+        CHECK(a[4] == 0);
         a.remove(1);
-        CHECK(a.getsize() == 4);
+        CHECK(a.ssize() == 4);
         CHECK(a[0] == doctest::Approx(1.5));
         CHECK(a[1] == doctest::Approx(2.5));
     }
@@ -54,7 +57,7 @@ TEST_CASE("ArrayD") {
         b[1] = 4.5;
         b[2] = 5.5;
         b = a;
-        CHECK(b.getsize() == 2);
+        CHECK(b.ssize() == 2);
         CHECK(b[0] == doctest::Approx(1.5));
         CHECK(b[1] == doctest::Approx(2.5));
     }

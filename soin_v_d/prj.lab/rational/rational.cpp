@@ -12,11 +12,11 @@ Rational::Rational() {
 	num = 0;
 	denom = 1;
 }
-Rational::Rational(int n) {
+Rational::Rational(int32_t n) {
 	num = n;
 	denom = 1;
 }
-Rational::Rational(int n, int d) {
+Rational::Rational(int32_t n, int32_t d) {
 	if (d < 0) {
 		d *= -1;
 		n *= -1;
@@ -29,28 +29,28 @@ Rational::Rational(int n, int d) {
 	denom = d;
 	reducing();
 }
-int Rational::numer() {
+int32_t Rational::numer() {
 	return num;
 }
-int Rational::denomer() {
+int32_t Rational::denomer() {
 	return denom;
 }
 
 
-int Rational::nod(int n, int d) {
+int32_t Rational::nod(int32_t n, int32_t d) {
 	if (d == 0) {
 		throw std::invalid_argument("division by zero");
 	}
 	assert(d != 0);
 	while (d != 0) {
-		int temp = d;
+		int32_t temp = d;
 		d = n % d;
 		n = temp;
 	}
 	return std::abs(n);
 }
 Rational& Rational::reducing() {
-	int dev = nod(num, denom);
+	int32_t dev = nod(num, denom);
 	num /= dev;
 	denom /= dev;
 	return *this;
@@ -87,19 +87,19 @@ Rational& Rational::operator/=(const Rational& rhs) {
 	return *this;
 }
 
-Rational& Rational::operator=(const int& rhs) {
+Rational& Rational::operator=(const int32_t& rhs) {
 	return *this = Rational(rhs);
 }
-Rational& Rational::operator+=(const int& rhs) {
+Rational& Rational::operator+=(const int32_t& rhs) {
 	return *this += Rational(rhs);
 }
-Rational& Rational::operator-=(const int& rhs) {
+Rational& Rational::operator-=(const int32_t& rhs) {
 	return *this -= Rational(rhs);
 }
-Rational& Rational::operator*=(const int& rhs) {
+Rational& Rational::operator*=(const int32_t& rhs) {
 	return *this *= Rational(rhs);
 }
-Rational& Rational::operator/=(const int& rhs) {
+Rational& Rational::operator/=(const int32_t& rhs) {
 	return *this /= Rational(rhs);
 }
 
@@ -124,36 +124,36 @@ Rational operator/(Rational lhs, const Rational& rhs) {
 	lhs.Rational::reducing();
 	return lhs;
 }
-Rational operator+(Rational lhs, const int& rhs) {
+Rational operator+(Rational lhs, const int32_t& rhs) {
 	lhs += Rational(rhs);
 	return lhs;
 }
-Rational operator-(Rational lhs, const int& rhs) {
+Rational operator-(Rational lhs, const int32_t& rhs) {
 	lhs -= Rational(rhs);
 	return lhs;
 }
-Rational operator*(Rational lhs, const int& rhs) {
+Rational operator*(Rational lhs, const int32_t& rhs) {
 	lhs *= Rational(rhs);
 	return lhs;
 }
-Rational operator/(Rational lhs, const int& rhs) {
+Rational operator/(Rational lhs, const int32_t& rhs) {
 	lhs /= Rational(rhs);
 	return lhs;
 }
 
-Rational operator+(const int& lhs, Rational rhs) {
+Rational operator+(const int32_t& lhs, Rational rhs) {
 	rhs += lhs;
 	return rhs;
 }
-Rational operator-(const int& lhs, Rational rhs) {
+Rational operator-(const int32_t& lhs, Rational rhs) {
 	rhs -= lhs;
 	return -rhs;
 }
-Rational operator*(const int& lhs, Rational rhs) {
+Rational operator*(const int32_t& lhs, Rational rhs) {
 	rhs *= lhs;
 	return rhs;
 }
-Rational operator/(const int& lhs, Rational rhs) {
+Rational operator/(const int32_t& lhs, Rational rhs) {
 	rhs/=lhs;
 	Rational a(1);
 	rhs = a / rhs;
@@ -197,7 +197,7 @@ Rational& Rational::operator++() {
 	*this += 1;
 	return *this;
 }
-Rational Rational::operator++(int) {
+Rational Rational::operator++(int32_t) {
 	Rational tmp(*this);
 	num += denom;
 	return tmp;
@@ -206,7 +206,7 @@ Rational& Rational::operator--() {
 	*this -= 1;
 	return *this;
 }
-Rational Rational::operator--(int) {
+Rational Rational::operator--(int32_t) {
 	Rational tmp(*this);
 	num -= denom;
 	return tmp;
@@ -238,7 +238,7 @@ std::istream& operator>>(std::istream& istrm, Rational& rat) {
 	return rat.readfrom(istrm);
 }
 std::istream& Rational::readfrom(std::istream& istrm) {
-	int numerator, denominator;
+	int32_t numerator, denominator;
 	char slash;
 
 	istrm >> numerator;

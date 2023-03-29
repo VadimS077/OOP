@@ -2,8 +2,8 @@
 // или включаемые файлы для конкретного проекта.
 
 #pragma once
-#ifndef ARRAYD_H
-#define ARRAYD_H
+#ifndef ARRAYT_T
+#define ARRAYT_T
 
 #include <iosfwd>
 #include<iostream>
@@ -16,37 +16,41 @@ class ArrayT {
 public:
 
 
-	ArrayT();
+	ArrayT()=default;
 	ArrayT(const ArrayT& rhs);
-	ArrayT(const ptrdiff_t cap);
+	explicit ArrayT(const std::ptrdiff_t cap);
 	~ArrayT();
-	ptrdiff_t getsize() const;
-	void insert(ptrdiff_t i,T a);
-	void remove(ptrdiff_t i);
-	void resize(const ptrdiff_t newsize);
-	T& operator[](const ptrdiff_t i);
-	const T& operator[](const ptrdiff_t i) const;
+	std::ptrdiff_t ssize() const noexcept;
+	void insert(std::ptrdiff_t i,T a);
+	void remove(std::ptrdiff_t i);
+	void resize(const std::ptrdiff_t newsize);
+	T& operator[](const std::ptrdiff_t i);
+	const T& operator[](const std::ptrdiff_t i) const;
 	std::ostream& writeto(std::ostream& ostrm) const;
 	ArrayT& operator=(const ArrayT& rhs);
 	
 public:
-	ptrdiff_t size_;
-	T* arr;
-	ptrdiff_t capacity;
+	std::ptrdiff_t size_ = 0;
+	T* arr = nullptr;
+	std::ptrdiff_t capacity = 0;
 
 };
 template<typename T>
 std::ostream& operator<<(std::ostream& ostrm, const ArrayT<T>& rhs);
 
 
+
 template<typename T>
-ArrayT<T>::ArrayT() : arr(nullptr), size_(0), capacity(0) {}
-template<typename T>
-ArrayT<T>::ArrayT(const ptrdiff_t cap) : size_(cap), capacity(cap) {
+ArrayT<T>::ArrayT(const std::ptrdiff_t cap) {
     if (cap < 0) {
         throw std::out_of_range("out of range");
     }
     arr = new T[cap];
+    capacity = cap;
+    size_ = cap;
+    for (std::ptrdiff_t i = 0; i < size_; i++) {
+        arr[i] = 0;
+    }
 }
 template<typename T>
 ArrayT<T>::ArrayT(const ArrayT& other) : arr(new T[other.capacity]), size_(other.size_), capacity(other.capacity) {
@@ -69,26 +73,26 @@ ArrayT<T>& ArrayT<T>::operator=(const ArrayT& other) {
     return *this;
 }
 template<typename T>
-ptrdiff_t ArrayT<T>::getsize() const {
+std::ptrdiff_t ArrayT<T>::ssize() const noexcept{
     return size_;
 }
 template<typename T>
-T& ArrayT<T>::operator[](const ptrdiff_t i) {
-    if (i<0 || i>getsize()) {
+T& ArrayT<T>::operator[](const std::ptrdiff_t i) {
+    if (i<0 || i>=ssize()) {
         throw std::out_of_range("out of range");
     }
     return arr[i];
 }
 template<typename T>
-const T& ArrayT<T>::operator[](const ptrdiff_t i) const
+const T& ArrayT<T>::operator[](const std::ptrdiff_t i) const
 {
-    if (i<0 || i>getsize()) {
+    if (i<0 || i>=ssize()) {
         throw std::out_of_range("out of range");
     }
     return arr[i];
 }
 template<typename T>
-void ArrayT<T>::resize(const ptrdiff_t newsize) {
+void ArrayT<T>::resize(const std::ptrdiff_t newsize) {
     if (newsize <= capacity) {
         size_ = newsize;
     }
@@ -105,33 +109,33 @@ void ArrayT<T>::resize(const ptrdiff_t newsize) {
     }
 }
 template<typename T>
-void ArrayT<T>::insert(ptrdiff_t i, T a) {
-    if (i<0 || i>getsize()) {
+void ArrayT<T>::insert(std::ptrdiff_t i, T a) {
+    if (i<0 || i>=ssize()) {
         throw std::out_of_range("out of range");
     }
-    resize(getsize() + 1);
-    for (ptrdiff_t b = getsize() - 1; b > i; b--) {
+    resize(ssize() + 1);
+    for (std::ptrdiff_t b = ssize() - 1; b > i; b--) {
         arr[b] = arr[b - 1];
     }
     arr[i] = a;
 }
 template<typename T>
-void ArrayT<T>::remove(ptrdiff_t i) {
-    if (i<0 || i>getsize()) {
+void ArrayT<T>::remove(std::ptrdiff_t i) {
+    if (i<0 || i>=ssize()) {
         throw std::out_of_range("out of range");
     }
-    for (ptrdiff_t b = i + 1; i < getsize(); i++) {
+    for (std::ptrdiff_t b = i + 1; i < ssize(); i++) {
         arr[b - 1] = arr[b];
     }
-    resize(getsize() - 1);
+    resize(ssize() - 1);
 }
 template<typename T>
 std::ostream& ArrayT<T>::writeto(std::ostream& ostrm) const {
     ostrm << "[";
-    for (ptrdiff_t i = 0; i < getsize() - 1; i++) {
+    for (std::ptrdiff_t i = 0; i < ssize() - 1; i++) {
         ostrm << arr[i] << ", ";
     }
-    ostrm << arr[getsize() - 1] << "]";
+    ostrm << arr[ssize() - 1] << "]";
     return ostrm;
 }
 template<typename T>

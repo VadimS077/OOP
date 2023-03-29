@@ -5,6 +5,7 @@
 #define RATIONAL_RATIONAL_HPP_20230215
 
 #include <iosfwd>
+#include <cstdint>
 class Rational {
 
 
@@ -13,15 +14,15 @@ public:
 	Rational();
 	Rational(const Rational&) = default;
 	Rational(Rational&&) = default;
-	Rational(int n);
-	Rational(int n, int d);
-	int nod(int num, int denom);
+	Rational(int32_t n);
+	Rational(int32_t n, int32_t d);
+	int32_t nod(int32_t num, int32_t denom);
 	Rational& reducing();
 	bool zero();
 	bool negative();
 	bool positive();
-	int numer();
-	int denomer();
+	int32_t numer();
+	int32_t denomer();
 
 public:
 	Rational& operator=(const Rational& rhs);
@@ -34,20 +35,20 @@ public:
 	std::istream& readfrom(std::istream& istrm);
 	
 	Rational& operator++();
-	Rational operator++(int);
+	Rational operator++(int32_t);
 	Rational& operator--();
-	Rational operator--(int);
+	Rational operator--(int32_t);
 	Rational operator+();
 	Rational operator-();
-	Rational& operator=(const int& rhs);
-	Rational& operator+=(const int& rhs);
-	Rational& operator-=(const int& rhs);
-	Rational& operator*=(const int& rhs);
-	Rational& operator/=(const int& rhs);
+	Rational& operator=(const int32_t& rhs);
+	Rational& operator+=(const int32_t& rhs);
+	Rational& operator-=(const int32_t& rhs);
+	Rational& operator*=(const int32_t& rhs);
+	Rational& operator/=(const int32_t& rhs);
 
 private:
-	int num;
-	int denom;
+	int32_t num;
+	int32_t denom;
 	static const char sep = '/';
 
 
@@ -69,15 +70,15 @@ Rational operator-(Rational lhs, const Rational& rhs);
 Rational operator*(Rational lhs, const Rational& rhs);
 Rational operator/(Rational lhs, const Rational& rhs);
 
-Rational operator+(Rational lhs, const int& rhs);
-Rational operator-(Rational lhs, const int& rhs);
-Rational operator*(Rational lhs, const int& rhs);
-Rational operator/(Rational lhs, const int& rhs);
+Rational operator+(Rational lhs, const int32_t& rhs);
+Rational operator-(Rational lhs, const int32_t& rhs);
+Rational operator*(Rational lhs, const int32_t& rhs);
+Rational operator/(Rational lhs, const int32_t& rhs);
 
-Rational operator+(const int& lhs, Rational rhs);
-Rational operator-(const int& lhs, Rational rhs);
-Rational operator*(const int& lhs, Rational rhs);
-Rational operator/(const int& lhs, Rational rhs);
+Rational operator+(const int32_t& lhs, Rational rhs);
+Rational operator-(const int32_t& lhs, Rational rhs);
+Rational operator*(const int32_t& lhs, Rational rhs);
+Rational operator/(const int32_t& lhs, Rational rhs);
 
 std::istream& operator>>(std::istream& istrm, Rational& rat);
 std::ostream& operator<<(std::ostream& ostrm, const Rational& rat);

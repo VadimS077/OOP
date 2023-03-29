@@ -3,12 +3,15 @@
 #include <arrayd/arrayd.hpp>
 #include<iostream>
 
-ArrayD::ArrayD(): arr(nullptr), size_(0), capacity(0) {}
-ArrayD::ArrayD(const ptrdiff_t cap) : arr(new double[cap]), size_(cap), capacity(cap) {
+
+ArrayD::ArrayD(const std::ptrdiff_t cap): capacity(cap),size_(cap){
     if (cap < 0) {
         throw std::out_of_range("out of range");
     }
-    for (ptrdiff_t i = 0; i < getsize(); i++) {
+    arr = new double[cap];
+    size_ = cap;
+    capacity = cap;
+    for (std::ptrdiff_t i = 0; i < size_; i++) {
         arr[i] = 0;
     }
 }
@@ -30,30 +33,30 @@ ArrayD& ArrayD::operator=(const ArrayD& other) {
 	}
 	return *this;
 }
-ptrdiff_t ArrayD::getsize() const {
+std::ptrdiff_t ArrayD::ssize() const noexcept{
 	return size_;
 }
-double& ArrayD::operator[](const ptrdiff_t i) {
-    if (i<0 || i>getsize()) {
+double& ArrayD::operator[](const std::ptrdiff_t i) {
+    if (i<0 || i>=ssize()) {
         throw std::out_of_range("out of range");
     }
     return arr[i];
 }
-const double& ArrayD::operator[](const ptrdiff_t i) const
+const double& ArrayD::operator[](const std::ptrdiff_t i) const
 {
-    if (i<0 || i>getsize()) {
+    if (i<0 || i>=ssize()) {
         throw std::out_of_range("out of range");
     }
     return arr[i];
 }
-void ArrayD::resize(const ptrdiff_t newsize) {
+void ArrayD::resize(const std::ptrdiff_t newsize) {
         if (newsize <= capacity) {
             size_ = newsize;
         }
         else {
         
             double* new_arr = new double[newsize];
-            for (ptrdiff_t i = 0; i < newsize; i++) {
+            for (std::ptrdiff_t i = 0; i < newsize; i++) {
                 new_arr[i] = 0;
             }
 
@@ -65,31 +68,31 @@ void ArrayD::resize(const ptrdiff_t newsize) {
             capacity = newsize;
         }
     }
-void ArrayD::insert(ptrdiff_t i,double a) {
-    if (i<0 || i>getsize()) {
+void ArrayD::insert(std::ptrdiff_t i,double a) {
+    if (i<0 || i>=ssize()) {
         throw std::out_of_range("out of range");
     }
-    resize(getsize() + 1);
-    for (ptrdiff_t b = getsize()-1; b>i; --b) {
+    resize(ssize() + 1);
+    for (std::ptrdiff_t b = ssize()-1; b>i; --b) {
         arr[b] = arr[b-1];
     }
     arr[i] = a;
 }
-void ArrayD::remove(ptrdiff_t i) {
-    if (i<0 || i>getsize()) {
+void ArrayD::remove(std::ptrdiff_t i) {
+    if (i<0 || i>ssize()) {
         throw std::out_of_range("out of range");
     }
-    for (ptrdiff_t b = i + 1; i < getsize(); ++i) {
+    for (std::ptrdiff_t b = i + 1; i < ssize(); ++i) {
         arr[b-1] = arr[b];
     }
-    resize(getsize() - 1);
+    resize(ssize() - 1);
 }
 std::ostream& ArrayD::writeto(std::ostream& ostrm) const {
     ostrm << "[";
-    for (ptrdiff_t i = 0; i < getsize()-1; i++) {
+    for (std::ptrdiff_t i = 0; i < ssize()-1; i++) {
         ostrm << arr[i]<<", ";
     }
-    ostrm << arr[getsize()-1]<<"]";
+    ostrm << arr[ssize()-1]<<"]";
     return ostrm;
 }
 std::ostream& operator<<(std::ostream& ostrm, const ArrayD& rhs) {
