@@ -50,6 +50,9 @@ const double& ArrayD::operator[](const std::ptrdiff_t i) const
     return arr[i];
 }
 void ArrayD::resize(const std::ptrdiff_t newsize) {
+    if (newsize <= 0) {
+        throw std::invalid_argument("bad size");
+    }
         if (newsize <= capacity) {
             size_ = newsize;
         }
@@ -69,7 +72,7 @@ void ArrayD::resize(const std::ptrdiff_t newsize) {
         }
     }
 void ArrayD::insert(std::ptrdiff_t i,double a) {
-    if (i<0 || i>=ssize()) {
+    if (i<0 || i>ssize()) {
         throw std::out_of_range("out of range");
     }
     resize(ssize() + 1);

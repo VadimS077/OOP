@@ -43,6 +43,7 @@ TEST_CASE("ArrayD") {
         CHECK(a[2] == doctest::Approx(2.5));
         CHECK(a[4] == 0);
         a.remove(1);
+        CHECK_THROWS(a[4]);
         CHECK(a.ssize() == 4);
         CHECK(a[0] == doctest::Approx(1.5));
         CHECK(a[1] == doctest::Approx(2.5));

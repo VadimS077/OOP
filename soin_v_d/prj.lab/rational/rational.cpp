@@ -225,10 +225,6 @@ std::ostream& operator<<(std::ostream& ostrm, const Rational& rat) {
 }
 std::ostream& Rational::WriteTo(std::ostream& ostrm) const noexcept {
 	ostrm << num << sep << denom;
-	if (denom == 0) {
-		throw std::invalid_argument("division by zero");
-	}
-	assert(denom != 0);
 
 	return ostrm;
 
@@ -255,7 +251,7 @@ std::istream& Rational::ReadFrom(std::istream& istrm) {
 		return istrm;
 	}
 
-	if (!(istrm >> denom) || denom<= 0) {
+	if (!(istrm >> denom) || denom <= 0) {
 		istrm.setstate(std::ios_base::failbit);
 		return istrm;
 	}
@@ -264,4 +260,3 @@ std::istream& Rational::ReadFrom(std::istream& istrm) {
 
 	return istrm;
 }
-

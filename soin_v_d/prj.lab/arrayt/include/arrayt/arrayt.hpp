@@ -93,6 +93,9 @@ const T& ArrayT<T>::operator[](const std::ptrdiff_t i) const
 }
 template<typename T>
 void ArrayT<T>::resize(const std::ptrdiff_t newsize) {
+    if (newsize <= 0) {
+        throw std::invalid_argument("bad size");
+    }
     if (newsize <= capacity) {
         size_ = newsize;
     }
@@ -110,7 +113,7 @@ void ArrayT<T>::resize(const std::ptrdiff_t newsize) {
 }
 template<typename T>
 void ArrayT<T>::insert(std::ptrdiff_t i, T a) {
-    if (i<0 || i>=ssize()) {
+    if (i<0 || i>ssize()) {
         throw std::out_of_range("out of range");
     }
     resize(ssize() + 1);
