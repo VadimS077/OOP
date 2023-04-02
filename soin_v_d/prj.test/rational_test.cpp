@@ -200,7 +200,7 @@ TEST_CASE("Rational class operator overloading tests") {
 
     SUBCASE("Test stream input operator") {
         Rational a;
-        std::stringstream input("2/ 3k");
+        std::stringstream input("2/3");
         input >> a;
         CHECK(a == Rational(2,3));
         

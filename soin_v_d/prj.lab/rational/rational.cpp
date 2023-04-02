@@ -238,17 +238,30 @@ std::istream& operator>>(std::istream& istrm, Rational& rat) {
 	return rat.ReadFrom(istrm);
 }
 std::istream& Rational::ReadFrom(std::istream& istrm) {
-	int32_t numerator, denominator;
-	char separator;
-	istrm >> numerator >> separator >> denominator;
-	if (!istrm.fail() && separator == Rational::sep && denominator != 0) {
-		num = numerator;
-		denom = denominator;
-	}
-	else {
+	int32_t num = 0;
+	int32_t denom = 0;
+	char sep = 0;
+
+	istrm >> std::ws;
+
+	if (!(istrm >> num)) {
 		istrm.setstate(std::ios_base::failbit);
+		return istrm;
 	}
+
+
+	if (!(istrm >> sep) || sep != Rational::sep) {
+		istrm.setstate(std::ios_base::failbit);
+		return istrm;
+	}
+
+	if (!(istrm >> denom) || denom<= 0) {
+		istrm.setstate(std::ios_base::failbit);
+		return istrm;
+	}
+
+	*this = Rational(num, denom);
+
 	return istrm;
 }
-
 
