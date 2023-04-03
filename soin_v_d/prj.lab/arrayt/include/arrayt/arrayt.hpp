@@ -55,7 +55,6 @@ ArrayT<T>::ArrayT(const std::ptrdiff_t cap) {
 template<typename T>
 ArrayT<T>::ArrayT(const ArrayT& other) : arr(new T[other.capacity]), size_(other.size_), capacity(other.capacity) {
     std::copy(other.arr, other.arr + size_, arr);
-    arr = new T[other.capacity];
 }
 
 template<typename T>
@@ -102,7 +101,9 @@ void ArrayT<T>::resize(const std::ptrdiff_t newsize) {
     else {
 
         T* new_arr = new T[newsize];
-
+        for (std::ptrdiff_t i = 0; i < newsize; i++) {
+            new_arr[i] = 0;
+        }
 
         std::copy(arr, arr + size_, new_arr);
         delete[] arr;
@@ -117,18 +118,18 @@ void ArrayT<T>::insert(std::ptrdiff_t i, T a) {
         throw std::out_of_range("out of range");
     }
     resize(ssize() + 1);
-    for (std::ptrdiff_t b = ssize() - 1; b > i; b--) {
+    for (std::ptrdiff_t b = ssize() - 1; b > i; --b) {
         arr[b] = arr[b - 1];
     }
     arr[i] = a;
 }
 template<typename T>
 void ArrayT<T>::remove(std::ptrdiff_t i) {
-    if (i<0 || i>=ssize()) {
+    if (i<0 || i>ssize()) {
         throw std::out_of_range("out of range");
     }
-    for (std::ptrdiff_t b = i + 1; i < ssize(); i++) {
-        arr[b - 1] = arr[b];
+    for (std::ptrdiff_t b = i + 1; i < ssize(); ++i) {
+        arr[b] = arr[b-1];
     }
     resize(ssize() - 1);
 }
