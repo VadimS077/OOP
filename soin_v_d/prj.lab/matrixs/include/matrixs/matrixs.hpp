@@ -13,7 +13,10 @@ public:
 
 private:
     SizeType size_;
-    int* data_;
+    int** matrix;
+    int32_t r;
+    int32_t c;
+
 
 public:
     explicit MatrixS(const SizeType& size = { 0, 0 });
@@ -23,6 +26,7 @@ public:
     ~MatrixS();
 
     MatrixS(const MatrixS& other);
+    void newmem();
 
     MatrixS& operator=(const MatrixS& other);
     int& at(const SizeType& elem);
