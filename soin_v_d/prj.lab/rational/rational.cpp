@@ -233,30 +233,58 @@ std::ostream& Rational::WriteTo(std::ostream& ostrm) const noexcept {
 std::istream& operator>>(std::istream& istrm, Rational& rat) {
 	return rat.ReadFrom(istrm);
 }
-std::istream& Rational::ReadFrom(std::istream& istrm) {
-	int32_t num = 0;
-	int32_t denom = 0;
-	char sep = 0;
+std::istream& Rational::ReadFrom(std::istream& istrm)
+{
+	char sym('-');
+	while (std::isspace(istrm.peek())) {
+		sym = istrm.get();
+	}
+	int32_t numInp_(0);
+	int32_t denomInp_(0);
+	sym = '-';
+	bool isNeg(false);
+	if (istrm.peek() == '-') {
+		isNeg = true;
+		sym = istrm.get();
+	}
 
-	istrm >> std::ws;
-
-	if (!(istrm >> num)) {
+	while (std::isdigit(istrm.peek())) {
+		sym = istrm.get();
+		numInp_ *= 10;
+		numInp_ += static_cast<int>(sym - '0');
+	}
+	if (sym == '-') {
 		istrm.setstate(std::ios_base::failbit);
 		return istrm;
 	}
 
+	if (istrm.peek() != '/') {
+		istrm.setstate(std::ios_base::failbit);
+		return istrm;
+	}
+	sym = istrm.get();
 
-	if (!(istrm >> sep) || sep != Rational::sep) {
+	while (std::isdigit(istrm.peek())) {
+		sym = istrm.get();
+		denomInp_ *= 10;
+		denomInp_ += static_cast<int>(sym - '0');
+	}
+	if (sym == '/') {
 		istrm.setstate(std::ios_base::failbit);
 		return istrm;
 	}
 
-	if (!(istrm >> denom) || denom <= 0) {
-		istrm.setstate(std::ios_base::failbit);
-		return istrm;
+	if (istrm.good() || istrm.eof()) {
+		if (denomInp_ == 0) {
+			istrm.setstate(std::ios_base::failbit);
+			return istrm;
+		}
+		num = numInp_;
+		denom = denomInp_;
+		if (isNeg) {
+			num *= -1;
+		}
+		reducing();
 	}
-
-	*this = Rational(num, denom);
-
 	return istrm;
 }
