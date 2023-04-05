@@ -101,25 +101,48 @@ int& MatrixS::at(const SizeType& elem) {
      
  }
  void MatrixS::resize(const SizeType& new_size) {
-     if (std::get<0>(new_size) < 0 || std::get<1>(new_size) < 0) {
+     if (std::get<0>(new_size) <= 0 || std::get<1>(new_size) <= 0) {
          throw std::invalid_argument("invalid size");
      }
-     r = std::get<0>(new_size);
-     c = std::get<1>(new_size);
-     newmem();
+     int i = std::get<0>(new_size);
+     int j= std::get<1>(new_size);
 
-     
+     MatrixS other(i, j);
+     for (std::ptrdiff_t a = 0; a < i; ++a) {
+         for (std::ptrdiff_t b = 0; b < j; ++b) {
+             if (r <= a || c <= b) {
+                 other.at(a,b) = 0;
+             }
+             else {
+                 other.at(a, b) = at(a, b);
 
+             }
+         }
+
+
+     }
+     *this = other;
  }
  void MatrixS::resize(const std::ptrdiff_t i, const std::ptrdiff_t j) {
-     if (i < 0 || j < 0) {
+     if (i <= 0 || j <= 0) {
          throw std::invalid_argument("invalid size");
      }
-     r = i;
-     c = j;
-     size_ = std::make_tuple(r, c);
-     newmem();
+     
+     MatrixS other(i, j);
+     for (std::ptrdiff_t a = 0; a < i; ++a) {
+         for (std::ptrdiff_t b = 0; b < j; ++b) {
+             if (r <= a || c <= b) {
+                 other.at(a,b) = 0;
+             }
+             else {
+                 other.at(a,b) = at(a,b);
 
+             }
+         }
+         
+
+     }
+     *this = other;
  }
  const MatrixS::SizeType& MatrixS::ssize() const noexcept {
      return size_;

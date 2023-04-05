@@ -36,11 +36,16 @@ TEST_CASE("MatrixS tests") {
     }
 
     SUBCASE("Resize") {
-        MatrixS mat(2, 3);
-        mat.resize(3, 2);
-        CHECK(mat.ssize() == std::make_tuple(3, 2));
-        CHECK(mat.nRows() == 3);
-        CHECK(mat.nCols() == 2);
+        MatrixS mat(6, 6);
+        mat.at(1, 2) = 6;
+        mat.resize(2, 3);
+        CHECK(mat.ssize() == std::make_tuple(2, 3));
+        CHECK(mat.nRows() == 2);
+        CHECK(mat.nCols() == 3);
+        CHECK(mat.at(1,2)==6);
+        CHECK(mat.at(1,1) == 0);
+
+
     }
 
     SUBCASE("At") {
