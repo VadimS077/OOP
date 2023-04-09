@@ -2,7 +2,7 @@
 
 
 MatrixS::MatrixS(const SizeType& size){
-    if (std::get<0>(new_size) <= 0 || std::get<1>(new_size) <= 0) {
+    if (std::get<0>(size) <= 0 || std::get<1>(size) <= 0) {
          throw std::invalid_argument("invalid size");
      }
     r = std::get<0>(size)
