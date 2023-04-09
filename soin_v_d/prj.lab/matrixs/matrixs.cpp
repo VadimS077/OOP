@@ -2,7 +2,10 @@
 
 
 MatrixS::MatrixS(const SizeType& size){
-    r = std::get<0>(size);
+    if (std::get<0>(new_size) <= 0 || std::get<1>(new_size) <= 0) {
+         throw std::invalid_argument("invalid size");
+     }
+    r = std::get<0>(size)
     c = std::get<1>(size);
     size_ = size;
     newmem();
@@ -22,6 +25,9 @@ void MatrixS::newmem() {
 
 
 MatrixS::MatrixS(const std::ptrdiff_t m, const std::ptrdiff_t n) {
+    if (m <= 0 || n <= 0) {
+         throw std::invalid_argument("invalid size");
+     }
     r = m;
     c = n;
     size_ = std::make_tuple(r, c);
