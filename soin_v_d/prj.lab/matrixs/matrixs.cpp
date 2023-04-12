@@ -2,6 +2,7 @@
 
 
 MatrixS::MatrixS(const SizeType& size){
+
     if (std::get<0>(size) <= 0 || std::get<1>(size) <= 0) {
         throw std::invalid_argument("invalid size");
     }
@@ -25,6 +26,7 @@ void MatrixS::newmem() {
 
 
 MatrixS::MatrixS(const std::ptrdiff_t m, const std::ptrdiff_t n) {
+
     if (m <= 0 || n <= 0) {
         throw std::invalid_argument("invalid size");
     }

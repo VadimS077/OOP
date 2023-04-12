@@ -12,10 +12,10 @@ TEST_CASE("MatrixS tests") {
 
     SUBCASE("Size constructor") {
         MatrixS::SizeType s = std::make_tuple(2, 3);
-        MatrixS mat(2,3);
-        CHECK(mat.ssize() == std::make_tuple(2, 3));
-        CHECK(mat.nRows() == 2);
-        CHECK(mat.nCols() == 3);
+        MatrixS mat(3,2);
+        CHECK(mat.ssize() == std::make_tuple(3, 2));
+        CHECK(mat.nRows() == 3);
+        CHECK(mat.nCols() == 2);
     }
 
     SUBCASE("Copy constructor") {
