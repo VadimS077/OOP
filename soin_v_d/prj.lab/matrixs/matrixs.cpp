@@ -10,8 +10,8 @@ MatrixS::MatrixS(const SizeType& size){
     c = std::get<1>(size);
     size_ = size;
     newmem();
-    for (int i = 0; i < r; ++i) {
-        for (int j = 0; j < c; ++j) {
+    for (std::ptrdiff_t i = 0; i < r; ++i) {
+        for (std::ptrdiff_t j = 0; j < c; ++j) {
             matrix[i][j] = 0;
         }
     }
@@ -19,7 +19,7 @@ MatrixS::MatrixS(const SizeType& size){
 }
 void MatrixS::newmem() {
     matrix = new int* [r];
-    for (int i = 0; i < r; ++i) {
+    for (std::ptrdiff_t i = 0; i < r; ++i) {
         matrix[i] = new int[c];
     }
 }
@@ -34,8 +34,8 @@ MatrixS::MatrixS(const std::ptrdiff_t m, const std::ptrdiff_t n) {
     c = n;
     size_ = std::make_tuple(r, c);
     newmem();
-    for (int i = 0; i < r; ++i) {
-        for (int j = 0; j < c; ++j) {
+    for (std::ptrdiff_t i = 0; i < r; ++i) {
+        for (std::ptrdiff_t j= 0; j < c; ++j) {
             matrix[i][j] = 0;
         }
     }
@@ -44,7 +44,7 @@ MatrixS::MatrixS(const std::ptrdiff_t m, const std::ptrdiff_t n) {
 }
 
 MatrixS::~MatrixS() {
-    for (int i = 0; i < r; ++i) {
+    for (std::ptrdiff_t i = 0; i < r; ++i) {
         delete[] matrix[i];
     }
     delete[] matrix;
@@ -54,8 +54,8 @@ MatrixS::MatrixS(const MatrixS& other):r(other.r),c(other.c)
 {
     size_ = std::make_tuple(r, c);
     newmem();
-    for (int i = 0; i < r; ++i) {
-        for (int j = 0; j < c; ++j) {
+    for (std::ptrdiff_t i = 0; i < r; ++i) {
+        for (std::ptrdiff_t j = 0; j < c; ++j) {
             matrix[i][j] = other.matrix[i][j];
         }
     }
@@ -67,7 +67,7 @@ MatrixS& MatrixS::operator=(const MatrixS& other)
         return *this;
     }
     if (r != other.r || c != other.c) {
-        for (int i = 0; i < r; ++i) {
+        for (std::ptrdiff_t i = 0; i < r; ++i) {
             delete[] matrix[i];
         }
         delete[] matrix;
@@ -76,8 +76,8 @@ MatrixS& MatrixS::operator=(const MatrixS& other)
         size_ = std::make_tuple(r, c);
         newmem();
     }
-    for (int i = 0; i < r; ++i) {
-        for (int j = 0; j < c; ++j) {
+    for (std::ptrdiff_t i = 0; i < r; ++i) {
+        for (std::ptrdiff_t j = 0; j < c; ++j) {
             matrix[i][j] = other.matrix[i][j];
         }
     }
@@ -112,8 +112,8 @@ int& MatrixS::at(const SizeType& elem) {
      if (std::get<0>(new_size) <= 0 || std::get<1>(new_size) <= 0) {
          throw std::invalid_argument("invalid size");
      }
-     int i = std::get<0>(new_size);
-     int j= std::get<1>(new_size);
+     std::ptrdiff_t i = std::get<0>(new_size);
+     std::ptrdiff_t j= std::get<1>(new_size);
 
      MatrixS other(i, j);
      for (std::ptrdiff_t a = 0; a < i; ++a) {

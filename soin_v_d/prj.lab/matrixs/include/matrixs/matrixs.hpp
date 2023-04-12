@@ -14,8 +14,8 @@ public:
 private:
     SizeType size_ = { 0,0 };
     int** matrix=nullptr;
-    int32_t r=0;
-    int32_t c=0;
+    std::ptrdiff_t r=0;
+    std::ptrdiff_t c=0;
 
 
 public:
