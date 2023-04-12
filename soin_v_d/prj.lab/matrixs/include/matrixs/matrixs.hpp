@@ -12,14 +12,15 @@ public:
     using SizeType = std::tuple<std::ptrdiff_t, std::ptrdiff_t>;
 
 private:
-    SizeType size_;
-    int** matrix;
-    int32_t r;
-    int32_t c;
+    SizeType size_ = { 0,0 };
+    int** matrix=nullptr;
+    int32_t r=0;
+    int32_t c=0;
 
 
 public:
-    explicit MatrixS(const SizeType& size = { 0, 0 });
+    MatrixS()=default;
+    explicit MatrixS(const SizeType& size);
 
     MatrixS(const std::ptrdiff_t m, const std::ptrdiff_t n);
 
