@@ -15,7 +15,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_CURRENT_SOURCE_DIR}/bi
 project(cpp2023_test)
 
 find_package(doctest REQUIRED)
-find_package(OpenCV REQUIRED)
 
 add_subdirectory(prj.lab)
 add_subdirectory(prj.test)
