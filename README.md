@@ -17,7 +17,7 @@ A template dynamic array is similar to a dynamic array but allows for generic da
 
 ## Matrix
 
-A matrix is a two-dimensional array of numbers or other data types. It is implemented using a static two-dimensional array and supports operations such as addition, subtraction, multiplication, and transposition.
+A matrix is a two-dimensional array of numbers or other data types. It is implemented using a static two-dimensional array and it's dynamic.
 
 ## Rational Numbers
 
@@ -25,4 +25,4 @@ Rational numbers are numbers that can be expressed as a ratio of two integers. T
 
 ## Testing
 
-The pro.test folder contains test cases for each of these data structures to ensure their correct implementation and functionality.
+The prj.test folder contains test cases for each of these data structures to ensure their correct implementation and functionality.It is using doctest.
